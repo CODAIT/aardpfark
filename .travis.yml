@@ -9,4 +9,4 @@ before_install:
   - cd /home/travis/build/codait/hadrian/hadrian
   - git checkout origin/daily
   - mvn -DskipTests install
-  - cd /home/travis/build/codait/pfapoc
+  - cd /home/travis/build/codait/aardpfark
