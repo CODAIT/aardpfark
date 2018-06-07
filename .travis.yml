@@ -5,8 +5,8 @@ language: scala
 scala:
   - 2.11.8
 before_install:
-  - git clone https://github.com/opendatagroup/hadrian.git /home/travis/build/NickP/hadrian
-  - cd /home/travis/build/NickP/hadrian/hadrian
+  - git clone https://github.com/opendatagroup/hadrian.git /home/travis/build/codait/hadrian
+  - cd /home/travis/build/codait/hadrian/hadrian
   - git checkout origin/daily
   - mvn -DskipTests install
-  - cd /home/travis/build/NickP/pfapoc
+  - cd /home/travis/build/codait/pfapoc
