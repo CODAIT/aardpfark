@@ -1,4 +1,4 @@
-[![Build Status]()]()
+[![Build Status]()](https://travis-ci.org/CODAIT/aardpfark.svg?branch=master)
 
 # Aardpfark
 
