@@ -28,7 +28,7 @@ Aardpfark currently targets and has been tested on Apache Spark 2.2.0. 2.3.0 sup
 2. Add the aardpfark JAR to your Spark application, e.g. using spark-shell:
 
 ```
-./bin/spark-shell --jars /PATH_TO_AARDPFARK_JAR/aardpfark-assembly-0.1.0-SNAPSHOT.jar
+./bin/spark-shell --driver-class-path /PATH_TO_AARDPFARK_JAR/aardpfark-assembly-0.1.0-SNAPSHOT.jar
 
 ```
 
@@ -52,6 +52,8 @@ to export a simple logistic regression model and print the resulting PFA documen
 ```scala
 import com.ibm.aardpfark.spark.ml.SparkSupport.toPFA
 
+import org.apache.spark.ml.classification._
+
 val data = spark.read.format("libsvm").load("data/sample_multiclass_classification_data.txt")
 val lr = new LogisticRegression()
 val model = lr.fit(data)
@@ -69,6 +71,9 @@ to the export function:
 
 ```scala
 import com.ibm.aardpfark.spark.ml.SparkSupport.toPFA
+
+import org.apache.spark.ml._
+import org.apache.spark.ml.feature._
 
 val data = spark.read.format("libsvm").load("data/sample_multiclass_classification_data.txt")
 val scaler = new StandardScaler().setInputCol("features").setOutputCol("scaled")
@@ -89,11 +94,19 @@ To score exported models, use a reference PFA scoring engine in Java, Python or 
 [Hadrian project](https://github.com/opendatagroup/hadrian). *Note* for the JVM engine you will 
 need to install the `daily` branch build (see the [instructions below](#running-the-tests)).
 
-For example, using the Hadrian JVM engine (in Scala):
+For example, using the Hadrian JVM engine (in Scala). You can add the Hadrian jar to the driver classpath
+
+```
+$SPARK_HOME/bin/spark-shell --driver-class-path /PATH_TO_AARDPFARK_JAR/aardpfark-assembly-0.1.0-SNAPSHOT.jar:/PATH_TO_HADRIAN_JAR/hadrian-0.8.5.jar
+```
+
+and execute the following:
 
 ```scala
 import com.opendatagroup.hadrian.jvmcompiler.PFAEngine
 import com.ibm.aardpfark.spark.ml.SparkSupport.toPFA
+
+import org.apache.spark.ml.classification._
 
 val data = spark.read.format("libsvm").load("data/sample_multiclass_classification_data.txt")
 val lr = new LogisticRegression()
